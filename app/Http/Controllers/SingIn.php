@@ -8,7 +8,9 @@ class SingIn
 {
     public function __invoke(Request $request)
     {
-        $token = auth()->login($request->only(['email', 'password']));
+        if (! $token = auth()->attempt($request->only('email', 'password'))) {
+            return response()->json(['error' => 'Unauthorized'], 401);
+        }
 
         $user = auth()->user();
 
