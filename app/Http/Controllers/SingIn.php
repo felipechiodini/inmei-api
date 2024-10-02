@@ -2,31 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 
 class SingIn
 {
     public function __invoke(Request $request)
     {
-        $request->validate([
-            'name' => 'required',
-            'email' => 'required|email',
-            'document' => 'required',
-            'password' => 'required|confirmed',
-        ]);
+        $token = auth()->login($request->only(['email', 'password']));
 
-        User::query()->create([
-            $request->name,
-            $request->email,
-            $request->document,
-            Hash::make($request->password)
-        ]);
+        $user = auth()->user();
 
         $message = 'Usuário criado com sucesso!';
 
         return response()
-            ->json(compact('message'));
+            ->json(compact('message', 'user', 'token'));
     }
 }
