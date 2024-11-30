@@ -7,4 +7,5 @@ Route::prefix('app')
         Route::post('sing-in', App\Http\Controllers\SingIn::class);
         Route::post('sing-up', App\Http\Controllers\SingUp::class);
         Route::post('subscribe', App\Http\Controllers\Subscribe::class);
+        Route::post('request-income-tax-service', App\Http\Controllers\RequestIncomeTaxService::class);
     });
